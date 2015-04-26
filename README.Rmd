@@ -30,7 +30,7 @@ The file names mentioned in the previous "Running the code" section is the same 
     * The "t" and "f" are translated to "timeDom" and "freqDom", meaning time domain and frequency domain.
     * The "-mean()" and "-std()" are translated to Mean and StdDev, meaning mean and standard deviation.
     * The "-X", "-Y" and "-Z" are translated to Xaxis, Yaxis and Zaxis respectively.
-    * Fix the "BodyBody" typo in the orginal feature name of the raw data.
+    * Fix the "BodyBody" typo in the original feature name of the raw data.
     * The remaining part of a feature name after the above translation is kept the same as those in the raw data.
     
 * It merges the training and testing datasets to one dataset.
