@@ -1,0 +1,42 @@
+---
+title: "README"
+---
+
+# Running the code
+To run "run_analysis.R", please make sure that "run_analysis.R" is in the current working directory. Also, make sure the following data files are in the same working directory.
+
+* X_train.txt = raw feature file for training
+* y_train.txt = activity label file for training
+* subject_train.txt = the subject ID file for training
+* X_test.txt = raw feature file for testing
+* y_test.txt = activity label file for testing
+* subject_test.txt = the subject ID file for testing
+* features.txt = the names of the corresponding features in the raw feature files
+* activity_labels.txt = the descriptive names of the activity labels.
+
+To run the script, just type "source(\"run_analysis.R\")".
+
+The output will be a file called "avgFeatBySubjAndAct.txt" which contains the average of each 66 features for each subject and each activity.
+
+# Raw data source
+The raw data source is obtained from Smartlab - Non Linear Complex Systems Laboratory, DITEN - Università degli Studi di Genova. The raw data files can be downloaded from https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip
+
+The file names mentioned in the previous "Running the code" section is the same as those in the raw data source. Refer to the raw data source if you would like more information.
+
+# What does this analysis script do?
+* This script has extracted all the features from the raw data source whose names contain the string "mean()" and "std()", which correspond to the mean and standard deviation of the measurements.
+
+* It converts the feature names to more descriptive names. In particular, 
+    * The "t" and "f" are translated to "timeDom" and "freqDom", meaning time domain and frequency domain.
+    * The "-mean()" and "-std()" are translated to Mean and StdDev, meaning mean and standard deviation.
+    * The "-X", "-Y" and "-Z" are translated to Xaxis, Yaxis and Zaxis respectively.
+    * Fix the "BodyBody" typo in the orginal feature name of the raw data.
+    * The remaining part of a feature name after the above translation is kept the same as those in the raw data.
+    
+* It merges the training and testing datasets to one dataset.
+
+* Attach the activity description names to each entry of the features
+
+* Attach the subject ID to each entry of the features. Calculate the average of each feature for each subject and each activity. Write the result to the output file "avgFeatBySubjAndAct.txt" which can be read again by R using the command "read.table(\"avgFeatBySubjAndAct.txt\", header = TRUE)" (without quotes). The feature names are suffixed by "AvgBySubjAndAct" to indicate that the features are averaged for each subject and each activity.
+
+

@@ -1,0 +1,105 @@
+---
+title: "CodeBook"
+---
+
+# Study design
+
+* The raw data is obtained from Smartlab - Non Linear Complex Systems Laboratory, DITEN - Università degli Studi di Genova. The raw data files can be downloaded from https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip
+
+* This script has extracted all the features from the raw data source whose names contain the string "mean()" and "std()", which correspond to the mean and standard deviation of the measurements. There are 66 features extracted.
+
+* It converts the feature names to more descriptive names. In particular, 
+    * The "t" and "f" are translated to "timeDom" and "freqDom", meaning time domain and frequency domain.
+    * The "-mean()" and "-std()" are translated to Mean and StdDev, meaning mean and standard deviation.
+    * The "-X", "-Y" and "-Z" are translated to Xaxis, Yaxis and Zaxis respectively.
+    * Fix the "BodyBody" typo in the orginal feature name of the raw data.
+    * The remaining part of a feature name after the above translation is kept the same as those in the raw data.
+    
+* It merges the training and testing datasets to one dataset.
+
+* Attach the activity description names to each entry of the features
+
+* Attach the subject ID to each entry of the features. Calculate the average of each feature for each subject and each activity. Write the result to the output file "avgFeatBySubjAndAct.txt" which can be read again by R using the command "read.table(\"avgFeatBySubjAndAct.txt\", header = TRUE)" (without quotes). The feature names are suffixed by "AvgBySubjAndAct" to indicate that the features are averaged for each subject and each activity.
+
+# Code book
+## First tidy data set
+The first tidy data set is a merged feature table with the corresponding activity descriptions. After running the "run_analysis.R" script, the "featuresAndActivities" is this table in the global environment. Each row corresponds to one entry of 66 features (measurements) and its corresponding activity description. The first column is the activity description and each of the remaining columns corresponds to each feature.
+
+The following is the description of each column name of this table (note: $g$ means standard gravity unit):
+
+* "activity" = Activity description for this entry(row). It can be one of these values: WALKING, WALKING_UPSTAIRS, WALKING_DOWNSTAIRS, SITTING, STANDING or LAYING.
+* "timeDomBodyAccMeanXaxis" = Mean body acceleration in time domain in X-axis. Unit: $g$ 
+* "timeDomBodyAccMeanYaxis" = Mean body acceleration in time domain in Y-axis. Unit: $g$
+* "timeDomBodyAccMeanZaxis" = Mean body acceleration in time domain in Z-axis. Unit: $g$
+* "timeDomBodyAccStdDevXaxis" = Standard deviation of body acceleration in time domain in X-axis. Unit: $g$
+* "timeDomBodyAccStdDevYaxis" = Standard deviation of body acceleration in time domain in Y-axis. Unit: $g$
+* "timeDomBodyAccStdDevZaxis" = Standard deviation of body acceleration in time domain in Z-axis. Unit: $g$
+* "timeDomGravityAccMeanXaxis" = Mean gravitational acceleration in time domain in X-axis. Unit: $g$
+* "timeDomGravityAccMeanYaxis" = Mean gravitational acceleration in time domain in Y-axis. Unit: $g$
+* "timeDomGravityAccMeanZaxis" = Mean gravitational acceleration in time domain in Z-axis. Unit: $g$
+* "timeDomGravityAccStdDevXaxis" = Standard deviation of gravitational acceleration in time domain in X-axis. Unit: $g$ 
+* "timeDomGravityAccStdDevYaxis" = Standard deviation of gravitational acceleration in time domain in Y-axis. Unit: $g$
+* "timeDomGravityAccStdDevZaxis" = Standard deviation of gravitational acceleration in time domain in Z-axis. Unit: $g$
+* "timeDomBodyAccJerkMeanXaxis" = Mean of body acceleration Jerk signal in time domain in X-axis. Unit: $g/sec$
+* "timeDomBodyAccJerkMeanYaxis" = Mean of body acceleration Jerk signal in time domain in Y-axis. Unit: $g/sec$
+* "timeDomBodyAccJerkMeanZaxis" = Mean of body acceleration Jerk signal in time domain in Z-axis. Unit: $g/sec$
+* "timeDomBodyAccJerkStdDevXaxis" = Standard deviation of body acceleration Jerk signal in time domain in X-axis. Unit: $g/sec$
+* "timeDomBodyAccJerkStdDevYaxis" = Standard deviation of body acceleration Jerk signal in time domain in Y-axis. Unit: $g/sec$
+* "timeDomBodyAccJerkStdDevZaxis" = Standard deviation of body acceleration Jerk signal in time domain in Z-axis. Unit: $g/sec$
+* "timeDomBodyGyroMeanXaxis" = Mean body angular velocity in time domain in X-axis. Unit: $rad/sec$
+* "timeDomBodyGyroMeanYaxis" = Mean body angular velocity in time domain in Y-axis. Unit: $rad/sec$
+* "timeDomBodyGyroMeanZaxis" = Mean body angular velocity in time domain in Z-axis. Unit:$rad/sec$
+* "timeDomBodyGyroStdDevXaxis" = Standard deviation of body angular velocity in time domain in X-axis. Unit: $rad/sec$
+* "timeDomBodyGyroStdDevYaxis" = Standard deviation of body angular velocity in time domain in Y-axis. Unit: $rad/sec$
+* "timeDomBodyGyroStdDevZaxis" = Standard deviation of body angular velocity in time domain in Z-axis. Unit: $rad/sec$
+* "timeDomBodyGyroJerkMeanXaxis" = Mean body angular velocity Jerk in time domain in X-axis. Unit: $rad/sec^2$
+* "timeDomBodyGyroJerkMeanYaxis" = Mean body angular velocity Jerk in time domain in Y-axis. Unit: $rad/sec^2$
+* "timeDomBodyGyroJerkMeanZaxis" = Mean body angular velocity Jerk in time domain in Z-axis. Unit: $rad/sec^2$
+* "timeDomBodyGyroJerkStdDevXaxis" = Standard deviation of body angular velocity Jerk in time domain in X-axis. Unit: $rad/sec^2$
+* "timeDomBodyGyroJerkStdDevYaxis" = Standard deviation of body angular velocity Jerk in time domain in Y-axis. Unit: $rad/sec^2$
+* "timeDomBodyGyroJerkStdDevZaxis" = Standard deviation of body angular velocity Jerk in time domain in Z-axis. Unit: $rad/sec^2$
+* "timeDomBodyAccMagMean" = Mean body acceleration magnitude in time domain. Unit: $g$
+* "timeDomBodyAccMagStdDev" = Standard deviation of body acceleration magnitude in time domain. Unit: $g$
+* "timeDomGravityAccMagMean" = Mean gravitational acceleration magnitude in time domain. Unit: $g$
+* "timeDomGravityAccMagStdDev" = Standard deviation of gravitational acceleration magnitude in time domain. Unit: $g$
+* "timeDomBodyAccJerkMagMean" = Mean body acceleration Jerk magnitude in time domain. Unit: $g/sec$
+* "timeDomBodyAccJerkMagStdDev" = Standard deviation of body acceleration Jerk magnitude in time domain. Unit: $g/sec$
+* "timeDomBodyGyroMagMean" = Mean body angular velocity magnitude in time domain. Unit: $rad/sec$
+* "timeDomBodyGyroMagStdDev" = Standard deviation of body angular velocity magnitude in time domain. Unit: $rad/sec$
+* "timeDomBodyGyroJerkMagMean" = Mean body angular velocity Jerk magnitude in time domain. Unit: $rad/sec^2$
+* "timeDomBodyGyroJerkMagStdDev" = Standard deviation of body angular velocity Jerk magnitude in time domain. Unit: $rad/sec^2$
+* "freqDomBodyAccMeanXaxis" = mean body acceleration in frequency domain in X-axis. Unit: $g$
+* "freqDomBodyAccMeanYaxis" = mean body acceleration in frequency domain in Y-axis. Unit: $g$
+* "freqDomBodyAccMeanZaxis" = mean body acceleration in frequency domain in Z-axis. Unit: $g$
+* "freqDomBodyAccStdDevXaxis" = Standard deviation of body acceleration in frequency domain in X-axis. Unit: $g$
+* "freqDomBodyAccStdDevYaxis" = Standard deviation of body acceleration in frequency domain in Y-axis. Unit: $g$
+* "freqDomBodyAccStdDevZaxis" = Standard deviation of body acceleration in frequency domain in Z-axis. Unit: $g$
+* "freqDomBodyAccJerkMeanXaxis" = Mean body acceleration Jerk in frequency domain in X-axis. Unit: $g/sec$
+* "freqDomBodyAccJerkMeanYaxis" = Mean body acceleration Jerk in frequency domain in Y-axis. Unit: $g/sec$
+* "freqDomBodyAccJerkMeanZaxis" = Mean body acceleration Jerk in frequency domain in Z-axis. Unit: $g/sec$
+* "freqDomBodyAccJerkStdDevXaxis" = Standard deviation of body acceleration Jerk in frequency domain in X-axis. Unit: $g/sec$
+* "freqDomBodyAccJerkStdDevYaxis" = Standard deviation of body acceleration Jerk in frequency domain in Y-axis. Unit: $g/sec$
+* "freqDomBodyAccJerkStdDevZaxis" = Standard deviation of body acceleration Jerk in frequency domain in Z-axis. Unit: $g/sec$
+* "freqDomBodyGyroMeanXaxis" = Mean body angular velocity in frequency domain in X-axis. Unit: $rad/sec$
+* "freqDomBodyGyroMeanYaxis" = Mean body angular velocity in frequency domain in Y-axis. Unit: $rad/sec$
+* "freqDomBodyGyroMeanZaxis" = Mean body angular velocity in frequency domain in Z-axis. Unit: $rad/sec$
+* "freqDomBodyGyroStdDevXaxis" = Standard deviation of body angular velocity in frequency domain in X-axis. Unit: $rad/sec$
+* "freqDomBodyGyroStdDevYaxis" = Standard deviation of body angular velocity in frequency domain in Y-axis. Unit: $rad/sec$
+* "freqDomBodyGyroStdDevZaxis" = Standard deviation of body angular velocity in frequency domain in Z-axis. Unit: $rad/sec$
+* "freqDomBodyAccMagMean" = Mean body acceleration magnitude in frequency domain. Unit: $g$
+* "freqDomBodyAccMagStdDev" = Standard deviation of body acceleration magnitude in frequency domain. Unit: $g$
+* "freqDomBodyAccJerkMagMean" = Mean body acceleration Jerk magnitude in frequency domain. Unit: $g/sec$
+* "freqDomBodyAccJerkMagStdDev" = Standard deviation of body acceleration Jerk magnitude in frequency domain. Unit: $g/sec$
+* "freqDomBodyGyroMagMean" = Mean body angular velocity magnitude in frequency domain. Unit: $rad/sec$
+* "freqDomBodyGyroMagStdDev" = Standard deviation of body angular velocity magnitude in frequency domain. Unit: $rad/sec$
+* "freqDomBodyGyroJerkMagMean" = Mean body angular velocity Jerk magnitude in frequency domain. Unit: $rad/sec^2$
+* "freqDomBodyGyroJerkMagStdDev" = Standard deviation of body angular velocity Jerk magnitude in frequency domain. Unit: $rad/sec^2$
+
+## Second tidy data set
+The second tidy data set shows the average of each of the 66 features in the first data set for each subject and each activity. Each row corrpesonds to one subject and one activity. It is the "avgFeaturesBySubjectAndActivity" variable in the global environment after running the script. The data set is also saved to a file called "avgFeatBySubjAndAct.txt".
+
+The following is the description of each column of this data set:
+
+* "subject" = ID of the subject participated in the study. It ranges from 1 to 30.
+* "activity" = Activity description for this entry(row). It can be one of these values: WALKING, WALKING_UPSTAIRS, WALKING_DOWNSTAIRS, SITTING, STANDING or LAYING.
+* The remaining columns are just the averages of the 66 features as described in first tidy data set. The column names are suffixed by "AvgBySubjAndAct" to indicate that each of the 66 features are averaged for a particular subject and a particular activity. Refer to the "First tidy data set" section for the detailed descriptions.
